@@ -1,16 +1,18 @@
 import 'dart:convert';
 
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:leisure_yatra/utils/SnackBarUtils.dart';
 import 'package:lottie/lottie.dart';
-import 'package:travel_yatra/controller/HomeController.dart';
-import 'package:travel_yatra/model/IntroImagesResponse.dart';
-import 'package:travel_yatra/screens/form/FormScreen.dart';
-import 'package:travel_yatra/utils/ColorConstants.dart';
-import 'package:travel_yatra/utils/LocationUtils.dart';
-import 'package:travel_yatra/utils/TextStyles.dart';
+import 'package:leisure_yatra/controller/HomeController.dart';
+import 'package:leisure_yatra/model/IntroImagesResponse.dart';
+import 'package:leisure_yatra/screens/form/FormScreen.dart';
+import 'package:leisure_yatra/utils/ColorConstants.dart';
+import 'package:leisure_yatra/utils/LocationUtils.dart';
+import 'package:leisure_yatra/utils/TextStyles.dart';
 
 import '../../utils/GlobalWidgets.dart';
 
@@ -47,34 +49,64 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-class IntroHomeWidget extends StatelessWidget {
-
-  var introResponse = json.encode({"domestic_tour":[{"image":"https://images.unsplash.com/photo-1616787671803-e660b92c0d25?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8bWF0aHVyYXxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60","place_name":"Varindavan Tour","place_cost":"INR 3,999"},{"image":"https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8a2VyYWxhfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60","place_name":"Kerala Tour","place_cost":"INR 12,999"},{"image":"https://images.unsplash.com/photo-1605649487212-47bdab064df7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8aGltYWNoYWx8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60","place_name":"Himachal Tour","place_cost":"INR 7,999"},{"image":"https://images.unsplash.com/photo-1587295656906-b06dca8f2340?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cmFqYXN0aGFufGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60","place_name":"Rajasthan Tour","place_cost":"INR 8,499"},{"image":"https://images.unsplash.com/photo-1587922546307-776227941871?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8Z29hfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60","place_name":"Goa Tour","place_cost":"INR 4,999"}],"international_tour":[{"image":"https://images.unsplash.com/photo-1533682805518-48d1f5b8cd3a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8aG9uZ2tvbmd8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60","place_name":"Hongkong Tour","place_cost":null},{"image":"https://images.unsplash.com/flagged/photo-1562503542-2a1e6f03b16b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8c2luZ2Fwb3JlfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60","place_name":"Singapore Tour","place_cost":null},{"image":"https://images.unsplash.com/photo-1573843981267-be1999ff37cd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8bWFsZGl2ZXN8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60","place_name":"Maldives Tour","place_cost":null},{"image":"https://images.unsplash.com/photo-1512453979798-5ea266f8880c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8ZHViYWl8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60","place_name":"Dubai Tour","place_cost":null}]});
+class TourSearchBarWidget extends StatelessWidget{
+  TextEditingController? fullNameController;
   @override
   Widget build(BuildContext context) {
-    List<TourData>? domesticTourList = IntroImagesResponse.fromJson(json.decode(introResponse)).domesticTour;
-    List<TourData>? internationalTourList = IntroImagesResponse.fromJson(json.decode(introResponse)).internationalTour;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const SizedBox(height: 8,),
-        Padding(padding: EdgeInsets.only(left: 16),child: Text("Hi Stranger,", style: textStyleWithSizeColorWeight(20.0, tvHeadingColor, FontWeight.w500),)),
-        const SizedBox(height: 12,),
-        Padding(padding: EdgeInsets.only(left: 16), child: Text("Where do you\nwanna go?", style: textStyleWithSizeColorWeight(26.0, tvHeadingColor, FontWeight.w800),)),
-        const SizedBox(height: 24,),
-        Padding(padding: EdgeInsets.only(left: 8),child: Text("Domestic Tours", style: textStyleWithSizeColorWeight(20.0, tvHeadingColor, FontWeight.w600),)),
-        const SizedBox(height: 8,),
-        getCarouselWidget(domesticTourList ?? []),
-        const SizedBox(height: 24,),
-        Padding(padding: EdgeInsets.only(left: 8),child: Text("International Tours", style: textStyleWithSizeColorWeight(20.0, tvHeadingColor, FontWeight.w600),)),
-        const SizedBox(height: 8,),
-        getCarouselWidget(internationalTourList ?? []),
-        const SizedBox(height: 24,),
-      ],
+    fullNameController = TextEditingController();
+    return Padding(
+      padding: EdgeInsets.only(left: 16, right: 16),
+      child: outlinedTextField(
+          labelText: 'Enter your tour destination',
+          keyboardType: TextInputType.name,
+          prefixIcon: Icon(
+            Icons.person,
+            color: primary_color,
+          ),
+          suffixIcon: InkWell(child: Icon(Icons.arrow_forward_outlined, color: primary_color,), onTap: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) =>
+                FormScreen(fullNameController?.text)));
+          },),
+          controller: fullNameController),
+    );
+  }
+}
+
+class ToursFirestore extends StatelessWidget{
+
+  String tableName = "Domestic Tours";
+  ToursFirestore(this.tableName);
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder(
+      stream:
+          FirebaseFirestore.instance.collection(tableName).snapshots(),
+      builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        if (!snapshot.hasData) {
+          return Text("loading");
+        } else {
+          List<TourData> domesticTourList = [];
+          for(int i =0;i<num.parse(snapshot.data?.docs.length.toString() ?? "0");i++) {
+            domesticTourList.add(TourData(
+              image: snapshot.data?.docs[i]["image"],
+              placeName: snapshot.data?.docs[i]["place_name"],
+              placeCost: snapshot.data?.docs[i]["place_cost"],
+            ));
+          }
+          return CorousalHomePageWidget(domesticTourList ?? []);
+        }
+      },
     );
   }
 
-  Widget getCarouselWidget(List<TourData> tourList) {
+}
+
+class CorousalHomePageWidget extends StatelessWidget {
+
+  List<TourData> tourList = [];
+  CorousalHomePageWidget(this.tourList);
+  @override
+  Widget build(BuildContext context) {
     return CarouselSlider(
       options: CarouselOptions(
         viewportFraction:0.92,
@@ -93,7 +125,7 @@ class IntroHomeWidget extends StatelessWidget {
                 child: InkWell(
                   onTap: () {
                     Navigator.push(context, MaterialPageRoute(builder: (context) =>
-                       FormScreen(e.placeName)));
+                        FormScreen(e.placeName)));
                   },
                   child: Stack(
                     children: [
@@ -139,6 +171,37 @@ class IntroHomeWidget extends StatelessWidget {
           },
         );
       }).toList(),
+    );
+  }
+
+}
+
+class IntroHomeWidget extends StatelessWidget {
+
+  var introResponse = json.encode({"domestic_tour":[{"image":"https://images.unsplash.com/photo-1616787671803-e660b92c0d25?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8bWF0aHVyYXxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60","place_name":"Varindavan Tour","place_cost":"INR 3,999"},{"image":"https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8a2VyYWxhfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60","place_name":"Kerala Tour","place_cost":"INR 12,999"},{"image":"https://images.unsplash.com/photo-1605649487212-47bdab064df7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8aGltYWNoYWx8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60","place_name":"Himachal Tour","place_cost":"INR 7,999"},{"image":"https://images.unsplash.com/photo-1587295656906-b06dca8f2340?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cmFqYXN0aGFufGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60","place_name":"Rajasthan Tour","place_cost":"INR 8,499"},{"image":"https://images.unsplash.com/photo-1587922546307-776227941871?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8Z29hfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60","place_name":"Goa Tour","place_cost":"INR 4,999"}],"international_tour":[{"image":"https://images.unsplash.com/photo-1533682805518-48d1f5b8cd3a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8aG9uZ2tvbmd8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60","place_name":"Hongkong Tour","place_cost":null},{"image":"https://images.unsplash.com/flagged/photo-1562503542-2a1e6f03b16b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8c2luZ2Fwb3JlfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60","place_name":"Singapore Tour","place_cost":null},{"image":"https://images.unsplash.com/photo-1573843981267-be1999ff37cd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8bWFsZGl2ZXN8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60","place_name":"Maldives Tour","place_cost":null},{"image":"https://images.unsplash.com/photo-1512453979798-5ea266f8880c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8ZHViYWl8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60","place_name":"Dubai Tour","place_cost":null}]});
+  @override
+  Widget build(BuildContext context) {
+    List<TourData>? domesticTourList = IntroImagesResponse.fromJson(json.decode(introResponse)).domesticTour;
+    List<TourData>? internationalTourList = IntroImagesResponse.fromJson(json.decode(introResponse)).internationalTour;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const SizedBox(height: 8,),
+        Padding(padding: EdgeInsets.only(left: 16),child: Text("Hi Stranger,", style: textStyleWithSizeColorWeight(20.0, tvHeadingColor, FontWeight.w500),)),
+        const SizedBox(height: 12,),
+        Padding(padding: EdgeInsets.only(left: 16), child: Text("Where do you\nwanna go?", style: textStyleWithSizeColorWeight(26.0, tvHeadingColor, FontWeight.w800),)),
+        const SizedBox(height: 24,),
+        TourSearchBarWidget(),
+        const SizedBox(height: 24,),
+        Padding(padding: EdgeInsets.only(left: 8),child: Text("Domestic Tours", style: textStyleWithSizeColorWeight(20.0, tvHeadingColor, FontWeight.w600),)),
+        const SizedBox(height: 8,),
+        ToursFirestore("Domestic Tours"),
+        const SizedBox(height: 24,),
+        Padding(padding: EdgeInsets.only(left: 8),child: Text("International Tours", style: textStyleWithSizeColorWeight(20.0, tvHeadingColor, FontWeight.w600),)),
+        const SizedBox(height: 8,),
+        ToursFirestore("International Tour"),
+        const SizedBox(height: 24,),
+      ],
     );
   }
 }

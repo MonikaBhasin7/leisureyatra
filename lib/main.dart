@@ -1,8 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-
+import 'firebase_options.dart';
 import 'screens/home/HomePage.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -116,3 +122,116 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+
+/**
+ * buildscript {
+    ext.kotlin_version = '1.6.10'
+    repositories {
+    google()
+    mavenCentral()
+    }
+
+    dependencies {
+    classpath 'com.android.tools.build:gradle:4.1.0'
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    classpath 'com.google.gms:google-services:4.3.13'
+    }
+    }
+
+    allprojects {
+    repositories {
+    google()
+    mavenCentral()
+    }
+    }
+
+    rootProject.buildDir = '../build'
+    subprojects {
+    project.buildDir = "${rootProject.buildDir}/${project.name}"
+    }
+    subprojects {
+    project.evaluationDependsOn(':app')
+    }
+
+    task clean(type: Delete) {
+    delete rootProject.buildDir
+    }
+
+ */
+
+
+/***
+ * def localProperties = new Properties()
+    def localPropertiesFile = rootProject.file('local.properties')
+    if (localPropertiesFile.exists()) {
+    localPropertiesFile.withReader('UTF-8') { reader ->
+    localProperties.load(reader)
+    }
+    }
+
+    def flutterRoot = localProperties.getProperty('flutter.sdk')
+    if (flutterRoot == null) {
+    throw new GradleException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
+    }
+
+    def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
+    if (flutterVersionCode == null) {
+    flutterVersionCode = '1'
+    }
+
+    def flutterVersionName = localProperties.getProperty('flutter.versionName')
+    if (flutterVersionName == null) {
+    flutterVersionName = '1.0'
+    }
+
+    apply plugin: 'com.android.application'
+    apply plugin: 'kotlin-android'
+    apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
+
+    android {
+    compileSdkVersion flutter.compileSdkVersion
+
+    compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+    jvmTarget = '1.8'
+    }
+
+    sourceSets {
+    main.java.srcDirs += 'src/main/kotlin'
+    }
+
+    defaultConfig {
+    // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
+    applicationId "com.example.leisure_yatra"
+    minSdkVersion 20
+    targetSdkVersion flutter.targetSdkVersion
+    versionCode flutterVersionCode.toInteger()
+    versionName flutterVersionName
+    multiDexEnabled true
+    }
+
+    buildTypes {
+    release {
+    // TODO: Add your own signing config for the release build.
+    // Signing with the debug keys for now, so `flutter run --release` works.
+    signingConfig signingConfigs.debug
+    }
+    }
+    }
+
+    flutter {
+    source '../..'
+    }
+
+    dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation platform('com.google.firebase:firebase-bom:30.2.0')
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'com.android.support:multidex:1.0.3'
+    }
+
+ */

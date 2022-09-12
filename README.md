@@ -1,4 +1,4 @@
-# travel_yatra
+# leisure_yatra
 
 A new Flutter project.
 

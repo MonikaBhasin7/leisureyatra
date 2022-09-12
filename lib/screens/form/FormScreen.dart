@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:travel_yatra/screens/form/FormController.dart';
-import 'package:travel_yatra/utils/ColorConstants.dart';
-import 'package:travel_yatra/utils/DateTimeUtil.dart';
-import 'package:travel_yatra/utils/SnackBarUtils.dart';
+import 'package:leisure_yatra/screens/form/FormController.dart';
+import 'package:leisure_yatra/utils/ColorConstants.dart';
+import 'package:leisure_yatra/utils/DateTimeUtil.dart';
+import 'package:leisure_yatra/utils/SnackBarUtils.dart';
 
 import '../../utils/GlobalWidgets.dart';
 import '../../utils/TextStyles.dart';
@@ -148,7 +148,10 @@ class _FormScreenState extends State<FormScreen> {
                           passengersController?.text,
                           pickedDate, (message) {
                         context.showToastOnError(message: message);
-                      }, (message) {});
+                      }, (message) {
+                        context.showToastOnSuccess(message: message);
+                        Navigator.pop(context);
+                      });
                     },
                     child: Text(
                       'Enquiry Now',

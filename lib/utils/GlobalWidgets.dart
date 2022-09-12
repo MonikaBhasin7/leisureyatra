@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:travel_yatra/utils/ColorConstants.dart';
+import 'package:leisure_yatra/utils/ColorConstants.dart';
 
 import 'TextStyles.dart';
 
@@ -10,6 +10,7 @@ TextFormField outlinedTextField(
     Widget? prefixIcon,
     int? maxLength,
     int? height,
+    Widget? suffixIcon,
     Function()? onTapCallback}) {
   return TextFormField(
       onTap: () {
@@ -39,5 +40,7 @@ TextFormField outlinedTextField(
             borderRadius: BorderRadius.circular(16.0),
           ),
           //prefix: Padding(padding: EdgeInsets.only(right: 10),child: SvgPicture.asset("assets/svg/ic_rupee_icon.svg")),
-          prefixIcon: prefixIcon));
+          prefixIcon: prefixIcon,
+      suffixIcon: suffixIcon,
+      suffixIconColor: primary_color));
 }

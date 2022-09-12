@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "702057780335",
+    "firebase_url": "https://leisureyatra-4d414-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "leisureyatra-4d414",
+    "storage_bucket": "leisureyatra-4d414.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:702057780335:android:f946481febee4c0c48699a",
+        "android_client_info": {
+          "package_name": "com.example.leisure_yatra"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "702057780335-e9dvp8lt513kkfeit66jvkgurno5hub0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAAEahwnUP8HlfvoFtJJJF_8hvmgvHs_YQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "702057780335-e9dvp8lt513kkfeit66jvkgurno5hub0.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "702057780335-o009h01sh0fbj2m7ocbrrdesvd4jjnk9.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.travelYatra"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

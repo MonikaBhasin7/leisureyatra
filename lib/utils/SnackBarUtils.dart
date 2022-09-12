@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:travel_yatra/utils/ColorConstants.dart';
+import 'package:leisure_yatra/utils/ColorConstants.dart';
 
 extension ToastExtensions on BuildContext {
 

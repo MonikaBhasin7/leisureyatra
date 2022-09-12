@@ -1,6 +1,6 @@
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
-import 'package:travel_yatra/utils/LocationUtils.dart';
+import 'package:leisure_yatra/utils/LocationUtils.dart';
 
 class HomeController extends GetxController {
 
